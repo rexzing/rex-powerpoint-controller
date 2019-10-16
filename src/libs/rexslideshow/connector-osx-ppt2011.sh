@@ -43,7 +43,7 @@ while true; do
     fi
     command=`echo "$request" | sed -e 's;^.*command": *"\([^"]*\)".*$;\1;'`
 
-    #   let AppleScript produce the response
-    osascript "$basedir/connector-osx-ppt2011.scpt" $command
+    #   let JavaScript for Applications produce the response
+    osascript -l JavaScript "$basedir/connector-osx-ppt2011.js" $command 2>&1
 done
 
