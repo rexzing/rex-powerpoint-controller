@@ -1,0 +1,21 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<div style="text-align:center">
+  <h1>
+    Welcome to powerpoint controller!
+  </h1>
+</div>
+<h2>Here are functions to control powerpoint: </h2>
+<ul>
+  <li>
+    <h2><button (click)="openPresentation()" rel="noopener">Open Powerpoint</button></h2>
+  </li>
+  <li>
+    <h2><button (click)="prevView()" rel="noopener">Prev Slide</button> | <button (click)="nextView()" rel="noopener">Next Slide</button></h2>
+  </li>
+  <li>
+    <h2><button (click)="closeView()" rel="noopener">Close Powerpoint</button></h2>
+  </li>
+</ul>
+<h4>Slide note</h4>
+<p>{{ note }}</p>
+<router-outlet></router-outlet>

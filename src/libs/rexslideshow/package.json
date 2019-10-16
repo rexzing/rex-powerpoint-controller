@@ -1,0 +1,51 @@
+{
+    "name": "rexslideshow",
+    "description": "Observe and Control Slideshow Applications",
+    "version": "1.0.3",
+    "license": "MPL",
+    "author": {
+        "name": "Chamath Sandaru"
+    },
+    "keywords": [
+        "slide",
+        "slideshow",
+        "presentation",
+        "powerpoint",
+        "keynote",
+        "applescript",
+        "wsh",
+        "jscript"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/rse/slideshow.git"
+    },
+    "bugs": {
+        "url": "http://github.com/rse/slideshow"
+    },
+    "main": "./slideshow-api.js",
+    "bin": {
+        "slideshow": "./slideshow-cli.js"
+    },
+    "devDependencies": {
+        "grunt": "1.0.4",
+        "grunt-cli": "1.3.2",
+        "grunt-contrib-clean": "2.0.0",
+        "grunt-contrib-jshint": "2.1.0",
+        "grunt-eslint": "21.1.0",
+        "webpack": "^4.41.1",
+        "webpack-cli": "^3.3.9"
+    },
+    "dependencies": {
+        "bluebird": "3.5.5",
+        "chalk": "2.4.2",
+        "event-stream": "4.0.1",
+        "path": "^0.12.7"
+    },
+    "engines": {
+        "node": ">=8.0.0"
+    },
+    "browser": {
+        "child_process": false
+    }
+}
