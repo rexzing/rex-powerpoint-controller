@@ -69,13 +69,9 @@ end pptGetState
 on pptGetCurSlide()
     try
         tell application "Microsoft PowerPoint"
-            if slide state of slide show view of slide show window of active presentation is slide show state running then
-                --  currently in running slide show mode (for production)
-                set curSlide to (slide number of slide of slide show view of slide show window of active presentation)
-            else
-                --  currently in editing mode (for testing)
-                set curSlide to (slide number of slide range of selection of document window 1)
-            end if
+
+            set curSlide to (slide index of slide of slide show view of slide show window of active presentation)
+           
             return curSlide
         end tell
     on error errMsg
@@ -213,12 +209,10 @@ on cmdCTRL(command, arg)
             error "active presentation already viewing"
         end if
         tell application "Microsoft PowerPoint"
+        -- run slide show slide show settings of active presentation
             set slideShowSettings to slide show settings of active presentation
-            set slideShowSettings's starting slide to 1
-            set slideShowSettings's ending slide to 1
-            set slideShowSettings's range type to slide show range
-            set slideShowSettings's show type to slide show type speaker
-            set slideShowSettings's advance mode to slide show advance manual advance
+            set slideShowSettings's range type to slide show range show all
+            set slideShowSettings's show type to slide show type kiosk
             run slide show slideShowSettings -- BUGGY: starts blank
         end tell
     else if command is "STOP" then
