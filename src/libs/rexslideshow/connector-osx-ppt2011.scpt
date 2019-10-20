@@ -194,10 +194,10 @@ on cmdCTRL(command, arg)
             error "active presentation already existing"
         end if
         tell application "Microsoft PowerPoint"
-            tell application "Finder" to set thePath to ¬
-                POSIX file (POSIX path of (container of (path to me) as string) & (arg)) as alias
-            open thePath
-        end tell
+			tell application "Finder" to set thePath to ¬
+				POSIX file (arg) as alias
+			open thePath
+		end tell
     else if command is "CLOSE" then
         if state is "closed" or state is "running" then
             error "still no active presentation"

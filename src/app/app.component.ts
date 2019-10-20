@@ -13,9 +13,11 @@ export class AppComponent {
 
   async openPresentation() {
     console.log("Opening a presentation");
+    
     const Slideshow = (<any>window).require('rexslideshow');
     const slideshow = new Slideshow("powerpoint");
-    await slideshow.boot().then(function () { slideshow.open("D:/TestApps/rex-powerpoint-controller/ioi.pptx") }).then(function () { slideshow.start() });
+    debugger;
+    await slideshow.boot().then(function () { slideshow.open("/Users/chamath/Documents/testing/rex-powerpoint-controller/src/app/ioi.pptx") }).then(function () { slideshow.start() });
     this.showslideHolder = slideshow;
     let info = await slideshow.info((resp) => { return resp });
     this.notesList = info.notes;
