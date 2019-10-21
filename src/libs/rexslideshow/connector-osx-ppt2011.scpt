@@ -94,6 +94,7 @@ end pptGetMaxSlide
 --  the STATE command
 on cmdSTATE()
     set state to pptGetState()
+    set displayCount to 0
     if state is "closed" then
         set position to 0
         set slides to 0
@@ -101,9 +102,15 @@ on cmdSTATE()
         set position to pptGetCurSlide()
         set slides to pptGetMaxSlide()
     end if
+    tell application "Image Events"
+        launch
+        set displayCount to count displays
+        quit
+    end tell
     return ("{ \"response\": { " & ¬
         "\"state\": \"" & state & "\", " & ¬
         "\"position\": " & position & ", " & ¬
+        "\"displayCount\": " & displayCount & ", " & ¬
         "\"slides\": " & slides & " " & ¬
     "} }")
 end cmdSTATE
@@ -165,6 +172,7 @@ on cmdINFO()
         set theNotes to ("[ " & theNotes & " ]")
         set output to ("{ \"response\": { \"titles\": " & theTitles & ", \"notes\": " & theNotes & " } }")
     end tell
+    
     return output
 end cmdINFO
 
