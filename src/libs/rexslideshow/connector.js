@@ -41,10 +41,21 @@ var connector = function (application) {
     var filename = path.join(__dirname, cn);
 
     /*  spawn the connector as a child process  */
-    this.c = spawn(filename, [], {
-        stdio: [ "pipe", "pipe", process.stderr ],
-        env: { "CONNECTOR": "FIXME" }
-    });
+    if (os.platform() === "win32")
+    {
+        this.c = spawn(filename, [], {
+            stdio: [ "pipe", "pipe", process.stderr ],
+            env: { "CONNECTOR": "FIXME" }
+        });
+    }
+    else {
+        this.c=spawn(process.env.SHELL, ['-c', 'cd ' + __dirname + ' && sh '+filename],
+        {
+            stdio: [ "pipe", "pipe", process.stderr ],
+            env: { "CONNECTOR": "FIXME" }
+        });
+    }
+    
 
     /*  set the stdin/stdout pipes to UTF-8 encoding mode  */
     this.c.stdin.setEncoding("utf8");
@@ -55,7 +66,7 @@ var connector = function (application) {
         this.c.stdin,
         this.c.stdout.pipe(es.split(/\r?\n/))
     );
-
+        
     /*  connect to the stream for capturing responses  */
     this.responses = [];
     this.io.pipe(es.through(function onData (data) {
