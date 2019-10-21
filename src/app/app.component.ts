@@ -10,12 +10,15 @@ export class AppComponent {
   note: string;
   notesList: any;
   showslideHolder: any;
+  fileToUpload: any;
 
   async openPresentation() {
     console.log("Opening a presentation");
+
     const Slideshow = (<any>window).require('rexslideshow');
     const slideshow = new Slideshow("powerpoint");
-    await slideshow.boot().then(function () { slideshow.open("D:/TestApps/rex-powerpoint-controller/ioi.pptx") }).then(function () { slideshow.start() });
+    const filepath = this.fileToUpload.path;
+    await slideshow.boot().then(function () { slideshow.open(filepath) }).then(function () { slideshow.start() });
     this.showslideHolder = slideshow;
     let info = await slideshow.info((resp) => { return resp });
     this.notesList = info.notes;
@@ -41,6 +44,10 @@ export class AppComponent {
       .then(function () { slideshow.quit() })
       .then(function () { slideshow.end() })
     this.showslideHolder = null;
+  }
+
+  handleFileInput(files: FileList) {
+    this.fileToUpload = files.item(0);
   }
 
 }
