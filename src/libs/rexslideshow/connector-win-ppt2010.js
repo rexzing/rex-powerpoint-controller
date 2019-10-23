@@ -75,6 +75,8 @@ var cmdSTAT = function () {
     return "{ \"response\": { " +
         "\"state\": \"" + state + "\", " +
         "\"position\": " + slideCur + ", " +
+        "\"clickcount\": " + ss.View.GetClickCount() + ", " +
+        "\"last click\": " + ss.View.GetClickIndex() + ", " +
         "\"slides\": " + slideMax + " " +
         "} }";
 };
@@ -173,10 +175,13 @@ var cmdCONTROL = function (cmd, arg) {
         pres.Close();
     }
     else if (cmd === "START") {
-        pres.SlideShowSettings.StartingSlide = 1;
+        pres.SlideShowSettings.ShowType = 1; // set show type to ppShowTypeSpeaker
         pres.SlideShowSettings.ShowPresenterView = false;
-        pres.SlideShowSettings.EndingSlide = pres.Slides.Count;
+        // pres.SlideShowSettings.AdvanceMode = 2; // Automatically after a specified amount of time. Value ppAdvanceOnTime
+        pres.SlideShowSettings.ShowWithAnimation = -1;  //  msoTrue
+        pres.SlideShowSettings.RangeType = 1; // ppShowAll
         pres.SlideShowSettings.Run();
+        app.Windows(1).WindowState = 2; // Minimize the main application
     }
     else if (cmd === "STOP") {
         ss.View.Exit();
@@ -193,8 +198,13 @@ var cmdCONTROL = function (cmd, arg) {
         ss.View.GotoSlide(parseInt(arg, 10));
     else if (cmd === "PREV")
         ss.View.Previous();
-    else if (cmd === "NEXT")
-        ss.View.Next();
+    else if (cmd === "NEXT") {
+        if (ss.View.GetClickCount() > ss.View.GetClickIndex())
+            ss.View.GotoClick(ss.View.GetClickIndex() + 1);
+        else
+            ss.View.Next();
+    }
+
     return "{ \"response\": \"OK\" }";
 };
 
@@ -208,8 +218,9 @@ while (!WScript.StdIn.AtEndOfStream) {
     var argv = line.split(/\s+/);
     var cmd = argv[0];
     var arg = "";
-    if (argv.length > 1)
-        arg = argv[1];
+    for (i = 1; i < argv.length; i++) {
+        arg = arg + argv[i] + " ";
+    }
 
     /*  dispatch command  */
     var out = "";

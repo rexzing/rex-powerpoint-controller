@@ -30,6 +30,7 @@ export class AppComponent {
     this.showslideHolder.prev();
     let stat = await this.showslideHolder.stat();
     this.note = this.notesList[stat.position - 1];
+    console.log(await this.showslideHolder.stat());
   }
 
   async nextView() {

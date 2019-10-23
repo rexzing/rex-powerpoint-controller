@@ -29,21 +29,21 @@ slideshow.prototype = {
     end: function () {
         this.connector.end();
     },
-    "stat":   function ()   { return this.connector.request({ command: "STAT"       }); },
-    "info":   function ()   { return this.connector.request({ command: "INFO"       }); },
-    "boot":   function ()   { return this.connector.request({ command: "BOOT"       }); },
-    "quit":   function ()   { return this.connector.request({ command: "QUIT"       }); },
-    "open":   function (fn) { return this.connector.request({ command: "OPEN " + fn }); },
-    "close":  function ()   { return this.connector.request({ command: "CLOSE"      }); },
-    "start":  function ()   { return this.connector.request({ command: "START"      }); },
-    "stop":   function ()   { return this.connector.request({ command: "STOP"       }); },
-    "pause":  function ()   { return this.connector.request({ command: "PAUSE"      }); },
-    "resume": function ()   { return this.connector.request({ command: "RESUME"     }); },
-    "first":  function ()   { return this.connector.request({ command: "FIRST"      }); },
-    "last":   function ()   { return this.connector.request({ command: "LAST"       }); },
-    "goto":   function (sn) { return this.connector.request({ command: "GOTO " + sn }); },
-    "prev":   function ()   { return this.connector.request({ command: "PREV"       }); },
-    "next":   function ()   { return this.connector.request({ command: "NEXT"       }); }
+    "stat": function () { return this.connector.request({ command: "STAT" }); },
+    "info": function () { return this.connector.request({ command: "INFO" }); },
+    "boot": function () { return this.connector.request({ command: "BOOT" }); },
+    "quit": function () { return this.connector.request({ command: "QUIT" }); },
+    "open": function (fn) { return this.connector.request({ command: "OPEN " + fn }); },
+    "close": function () { return this.connector.request({ command: "CLOSE" }); },
+    "start": function () { return this.connector.request({ command: "START" }); },
+    "stop": function () { return this.connector.request({ command: "STOP" }); },
+    "pause": function () { return this.connector.request({ command: "PAUSE" }); },
+    "resume": function () { return this.connector.request({ command: "RESUME" }); },
+    "first": function () { return this.connector.request({ command: "FIRST" }); },
+    "last": function () { return this.connector.request({ command: "LAST" }); },
+    "goto": function (sn) { return this.connector.request({ command: "GOTO " + sn }); },
+    "prev": function () { return this.connector.request({ command: "PREV" }); },
+    "next": function () { return this.connector.request({ command: "NEXT" }); }
 };
 
 /*  export the API  */

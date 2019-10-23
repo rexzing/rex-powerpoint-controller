@@ -12,23 +12,23 @@
 */
 
 /*  thid-party requirements  */
-var os       = require("os");
-var path     = require("path");
-var spawn    = require("child_process").spawn;
-var es       = require("event-stream");
-var Promise  = require("bluebird");
+var os = require("os");
+var path = require("path");
+var spawn = require("child_process").spawn;
+var es = require("event-stream");
+var Promise = require("bluebird");
 
 /*  the supported connectors  */
 var connectors = {
-    "darwin-keynote":        "connector-osx-kn5.sh",
-    "darwin-keynote5":       "connector-osx-kn5.sh",
-    "darwin-keynote6":       "connector-osx-kn6.sh",
-    "darwin-powerpoint":     "connector-osx-ppt2011.sh",
+    "darwin-keynote": "connector-osx-kn5.sh",
+    "darwin-keynote5": "connector-osx-kn5.sh",
+    "darwin-keynote6": "connector-osx-kn6.sh",
+    "darwin-powerpoint": "connector-osx-ppt2011.sh",
     "darwin-powerpoint2011": "connector-osx-ppt2011.sh",
     "darwin-powerpoint2016": "connector-osx-ppt2011.sh",
-    "win32-powerpoint":      "connector-win-ppt2010.bat",
-    "win32-powerpoint2010":  "connector-win-ppt2010.bat",
-    "win32-powerpoint2013":  "connector-win-ppt2010.bat"
+    "win32-powerpoint": "connector-win-ppt2010.bat",
+    "win32-powerpoint2010": "connector-win-ppt2010.bat",
+    "win32-powerpoint2013": "connector-win-ppt2010.bat"
 };
 
 /*  the connector API constructor  */
@@ -41,21 +41,20 @@ var connector = function (application) {
     var filename = path.join(__dirname, cn);
 
     /*  spawn the connector as a child process  */
-    if (os.platform() === "win32")
-    {
+    if (os.platform() === "win32") {
         this.c = spawn(filename, [], {
-            stdio: [ "pipe", "pipe", process.stderr ],
+            stdio: ["pipe", "pipe", process.stderr],
             env: { "CONNECTOR": "FIXME" }
         });
     }
     else {
-        this.c=spawn(process.env.SHELL, ['-c', 'cd ' + __dirname + ' && sh '+filename],
-        {
-            stdio: [ "pipe", "pipe", process.stderr ],
-            env: { "CONNECTOR": "FIXME" }
-        });
+        this.c = spawn(process.env.SHELL, ['-c', 'cd ' + __dirname + ' && sh ' + filename],
+            {
+                stdio: ["pipe", "pipe", process.stderr],
+                env: { "CONNECTOR": "FIXME" }
+            });
     }
-    
+
 
     /*  set the stdin/stdout pipes to UTF-8 encoding mode  */
     this.c.stdin.setEncoding("utf8");
@@ -66,16 +65,16 @@ var connector = function (application) {
         this.c.stdin,
         this.c.stdout.pipe(es.split(/\r?\n/))
     );
-        
+
     /*  connect to the stream for capturing responses  */
     this.responses = [];
-    this.io.pipe(es.through(function onData (data) {
+    this.io.pipe(es.through(function onData(data) {
         if (typeof data === "undefined" || data === "")
             return;
         var response = this.responses.shift();
         if (typeof response === "function")
             response(data);
-    }.bind(this), function onEnd () {
+    }.bind(this), function onEnd() {
         /*  currently nothing to do?!  */
     }));
 };
@@ -98,6 +97,7 @@ connector.prototype = {
             else
                 promise.reject("Invalid response structure from connector");
         });
+        console.log(JSON.stringify(request) + "\r\n");
         this.io.write(JSON.stringify(request) + "\r\n");
         return promise.promise;
     },
