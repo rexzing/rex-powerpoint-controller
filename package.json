@@ -41,7 +41,7 @@
     "@types/node": "~8.9.4",
     "advanced-json-path": "^1.0.8",
     "codelyzer": "~4.2.1",
-    "electron": "^6.0.12",
+    "electron": "^9.4.0",
     "jasmine-core": "~2.99.1",
     "jasmine-spec-reporter": "~4.2.1",
     "karma": "~1.7.1",
